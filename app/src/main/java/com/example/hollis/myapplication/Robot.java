@@ -1,27 +1,34 @@
 package com.example.hollis.myapplication;
 
+import java.util.Random;
+
 /**
  * Created by hollis on 3/31/16.
  */
 public class Robot {
-    private int speed;
+    private int health;
     private boolean isMurderer;
 
 
     Robot(){
-        int speed = 5;
-        super();
-    }
-    public int speak (){
-        System.out.println("BEEP BOOP I AM A ROBOT");
+        health = new Random().nextInt(10) + 10;
     }
 
-    public destroyHuman(Human innocentCivilian){
-        innocentCivilian.die();
-        isMurderer = true;
+    public void punchRobot(Robot otherRobot){
+        otherRobot.loseHealth();
     }
 
-    public boolean isMurderer(){
-        return isMurderer;
-    };
+    public void loseHealth(){
+        health-= new Random().nextInt(5);
+    }
+
+    public boolean isBroken(){
+        return health<=0;
+    }
+
+    public int getHealth(){
+        return health;
+    }
+
+
 }
