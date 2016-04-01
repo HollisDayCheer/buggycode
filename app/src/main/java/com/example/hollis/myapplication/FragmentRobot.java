@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by hollis on 3/31/16.
  */
@@ -18,6 +16,7 @@ public class FragmentRobot extends Fragment {
         RobotFightListener robotFightListener;
         Robot ourRobot;
         int position;
+        Button button;
     TextView textView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class FragmentRobot extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_robot,container, false);
-        Button button = (Button) v.findViewById(R.id.fragment_robot_button);
+        button = (Button) v.findViewById(R.id.fragment_robot_button);
         textView = (TextView) v.findViewById(R.id.fragment_robot_health);
         textView.setText(ourRobot.getHealth() + "");
         button.setOnClickListener(new View.OnClickListener() {
@@ -51,12 +50,19 @@ public class FragmentRobot extends Fragment {
     }
     public interface RobotFightListener{
         void fightRobots(Robot robot, int position);
+        void setWinner(int position);
     }
 
     public void fightRobot(Robot otherRobot){
         otherRobot.punchRobot(ourRobot);
         textView.setText(ourRobot.getHealth() + "");
+        if(ourRobot.isBroken()) {
+            robotFightListener.setWinner(position);
+        }
     }
 
+    public void disableButton(){
+        button.setClickable(false);
+    }
 
 }

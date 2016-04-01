@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements FragmentRobot.Rob
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        textView = (TextView) findViewById(R.id.winner_text);
         initializeRobotFragment();
         initializeRobotFragment2();
     }
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements FragmentRobot.Rob
         fragmentTransaction.commit();
     }
 
+    @Override
     public void fightRobots(Robot robot, int position){
         System.out.println(robot.getHealth() + " and position is: " + position);
         if(position ==1){
@@ -53,8 +54,16 @@ public class MainActivity extends AppCompatActivity implements FragmentRobot.Rob
         }else{
             fragmentRobot1.fightRobot(robot);
         }
+    }
 
-        //TODO: Make this function
-
+    @Override
+    public void setWinner(int position) {
+        if(position==1) {
+            textView.setText("Winner is: " + 2);
+        }else{
+            textView.setText("Winner is: " + 1);
+        }
+        fragmentRobot1.disableButton();
+        fragmentRobot2.disableButton();
     }
 }
